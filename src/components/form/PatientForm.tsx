@@ -1,10 +1,13 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 /* FORMIK */
 import { useFormik } from 'formik';
 
 /* MATERIAL UI */
 import { MuiTelInput } from 'mui-tel-input';
+import { useSnackbar } from 'notistack';
 import { LoadingButton as Button } from '@mui/lab';
 import { InputAdornment, Stack, TextField, Typography } from '@mui/material';
 
@@ -13,24 +16,56 @@ import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 
 /* LIBRARIES */
+import { RemoveTelFormatting, FormatDateTime } from '@/libs/utils';
 import { UserFormValidation } from '@/libs/validation';
-import { formatDateTime } from '@/libs/utils';
+import { CreateUser } from '@/libs/actions/patient.action';
+
+/* TYPES */
+import type { CreateUserParams, ResponseType } from '@/types';
 
 export default function PatientForm() {
-  const formik = useFormik({
+  const NextRouter = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  /* Main Function */
+  const formik = useFormik<CreateUserParams>({
     initialValues: {
       name: '',
       email: '',
       phone: '+62',
     },
     validationSchema: UserFormValidation,
-    onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async ({ name, email, phone }) => {
+      try {
+        const responses = await CreateUser({
+          name,
+          email,
+          phone: RemoveTelFormatting(phone),
+        });
+
+        if (responses.status === 'error') throw responses;
+        if (responses.status === 'success' && responses.code !== 304) {
+          enqueueSnackbar('Berhasil kirim data', {
+            variant: 'alert',
+            severity: 'success',
+          });
+        }
+
+        NextRouter.push(`/patients/${responses.data?.$id}/register`);
+      } catch (error) {
+        enqueueSnackbar('Terjadi kesalahan', {
+          variant: 'alert',
+          severity: 'error',
+          description:
+            (error as unknown as ResponseType<null>).description || '',
+        });
+      }
     },
   });
 
+  /* Components Fuction */
   const getTranslatedTime = () => {
-    const { translatedTime } = formatDateTime(new Date());
+    const { translatedTime } = FormatDateTime(new Date());
 
     switch (translatedTime) {
       case 'morning':
@@ -122,7 +157,7 @@ export default function PatientForm() {
         helperText={formik.touched.phone && formik.errors.phone}
       />
 
-      <Button type="submit" variant="contained">
+      <Button type="submit" variant="contained" loading={formik.isSubmitting}>
         Mulai
       </Button>
     </Stack>

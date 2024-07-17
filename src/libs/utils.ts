@@ -1,5 +1,7 @@
+export const RemoveTelFormatting = (value: string) => value.replace(/\s+/g, '');
+
 // FORMAT DATE TIME
-export const formatDateTime = (dateString: Date | string) => {
+export const FormatDateTime = (dateString: Date | string) => {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
     // weekday: "short", // abbreviated weekday name (e.g., 'Mon')
     month: 'short', // abbreviated month name (e.g., 'Oct')

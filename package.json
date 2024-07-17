@@ -1,6 +1,6 @@
 {
   "name": "carepulse",
-  "version": "0.1",
+  "version": "0.3",
   "private": true,
   "engines": {
     "node": ">=18.17.0"
@@ -21,8 +21,11 @@
     "@mui/material": "^5.16.4",
     "@mui/material-nextjs": "^5.16.4",
     "formik": "^2.4.6",
+    "http-status-codes": "^2.3.0",
     "mui-tel-input": "^5.1.2",
     "next": "^14.2.5",
+    "node-appwrite": "^13.0.0",
+    "notistack": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.33.4",

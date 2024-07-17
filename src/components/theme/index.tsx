@@ -8,6 +8,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google';
 /* MATERIAL UI */
 import { styled } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import {
   ThemeProvider as MuiThemeProvider,
@@ -17,9 +18,13 @@ import {
 /* COLOR PALLETE */
 import Color from './color-pallete';
 
+/* COMPONENTS */
+import UISnackbarAlert from '../ui/feedback/snackbar/alert';
+
 /* TYPES */
-import type { PropsWithChildren } from '@/types';
 import type { PaletteMode } from '@mui/material';
+import type { PropsWithChildren } from '@/types';
+import type { AlertBase } from '../ui/feedback/snackbar';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -29,6 +34,13 @@ declare module '@mui/material/styles' {
     lg: true;
     xl: true;
     xxl: true;
+  }
+}
+
+declare module 'notistack' {
+  interface VariantOverrides {
+    default: false;
+    alert: AlertBase;
   }
 }
 
@@ -61,6 +73,12 @@ export default function ThemeProvider({ children }: PropsWithChildren) {
           mode === 'dark' ? Color.neutral.white[200] : Color.neutral.black[300],
         secondary:
           mode === 'dark' ? Color.neutral.black[700] : Color.neutral.black[500],
+      },
+      success: {
+        main: mode === 'dark' ? Color.dark.green[500] : Color.light.green[500],
+      },
+      info: {
+        main: mode === 'dark' ? Color.dark.blue[500] : Color.light.blue[500],
       },
       error: {
         main: mode === 'dark' ? Color.dark.red[700] : Color.light.red[500],
@@ -96,8 +114,19 @@ export default function ThemeProvider({ children }: PropsWithChildren) {
   return (
     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <MuiThemeProvider theme={appTheme}>
-        <CssBaseline />
-        {children}
+        <SnackbarProvider
+          Components={{
+            alert: UISnackbarAlert,
+          }}
+          autoHideDuration={3000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+        >
+          <CssBaseline />
+          {children}
+        </SnackbarProvider>
       </MuiThemeProvider>
     </AppRouterCacheProvider>
   );
