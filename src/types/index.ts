@@ -55,6 +55,14 @@ export interface UpdateAppointmentParams {
 
 // CLIENT
 export type PropsWithChildren = Readonly<{ children?: React.ReactNode }>;
+export type PropsWithChildrenRequired = Readonly<{
+  children: React.ReactNode;
+}>;
+
+export interface SearchParamProps {
+  params: Record<string, string>;
+  searchParams: Record<string, string | string[] | undefined>;
+}
 
 // SERVER
 export interface ResponseType<T> {

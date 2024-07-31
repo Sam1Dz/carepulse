@@ -8,7 +8,9 @@ import { Plus_Jakarta_Sans } from 'next/font/google';
 /* MATERIAL UI */
 import { styled } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { SnackbarProvider } from 'notistack';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import {
   ThemeProvider as MuiThemeProvider,
@@ -25,6 +27,9 @@ import UISnackbarAlert from '../ui/feedback/snackbar/alert';
 import type { PaletteMode } from '@mui/material';
 import type { PropsWithChildren } from '@/types';
 import type { AlertBase } from '../ui/feedback/snackbar';
+
+import 'dayjs/locale/es-us';
+import 'dayjs/locale/id';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -114,19 +119,21 @@ export default function ThemeProvider({ children }: PropsWithChildren) {
   return (
     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <MuiThemeProvider theme={appTheme}>
-        <SnackbarProvider
-          Components={{
-            alert: UISnackbarAlert,
-          }}
-          autoHideDuration={3000}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-        >
-          <CssBaseline />
-          {children}
-        </SnackbarProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="id">
+          <SnackbarProvider
+            Components={{
+              alert: UISnackbarAlert,
+            }}
+            autoHideDuration={3000}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+          >
+            <CssBaseline />
+            {children}
+          </SnackbarProvider>
+        </LocalizationProvider>
       </MuiThemeProvider>
     </AppRouterCacheProvider>
   );

@@ -8,17 +8,12 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Button, Typography } from '@mui/material';
 
 /* COMPONENTS */
-import PatientForm from '@/components/form/PatientForm';
 import Color from '@/components/theme/color-pallete';
+import PatientForm from '@/components/form/PatientForm';
 import { StyledImage } from '@/components/theme';
 
 /* STYLES */
-import {
-  container,
-  removeScrollbar,
-  sideImg,
-  subContainer,
-} from '@/styles/global';
+import { container, sideImg, subContainer } from '@/styles/global';
 
 export default function Home() {
   const MuiTheme = useTheme();
@@ -28,10 +23,6 @@ export default function Home() {
     MuiTheme.palette.mode === 'dark'
       ? '/assets/icons/logo-full-dark.svg'
       : '/assets/icons/logo-full-light.svg';
-  const sectionBoxSx = {
-    ...removeScrollbar,
-    ...container,
-  };
 
   return (
     <Box
@@ -46,7 +37,7 @@ export default function Home() {
       <Box
         component="section"
         sx={{
-          ...sectionBoxSx,
+          ...container,
           my: 'auto',
         }}
       >
@@ -102,6 +93,7 @@ export default function Home() {
       </Box>
 
       <StyledImage
+        priority
         alt="doctor"
         src="/assets/images/onboarding-img.png"
         width={1000}

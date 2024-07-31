@@ -60,3 +60,37 @@ export const CreateUser = async (
     }
   }
 };
+
+export const GetUser = async (
+  userId: string,
+): Promise<ResponseType<Models.User<Models.Preferences> | null>> => {
+  try {
+    const UserData = await Users.get(userId);
+
+    return {
+      status: 'success',
+      code: StatusCodes.OK,
+      data: UserData,
+      message: 'Success get user',
+      description: '(200) OK',
+    };
+  } catch (error: unknown) {
+    if (error instanceof AppwriteException) {
+      return {
+        status: 'error',
+        code: error.code,
+        data: null,
+        message: error.message,
+        description: `(${error.code}) ${error.type.toUpperCase()}`,
+      };
+    } else {
+      return {
+        status: 'error',
+        code: StatusCodes.INTERNAL_SERVER_ERROR,
+        data: null,
+        message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+        description: `(500) INTERNAL_SERVER_ERROR`,
+      };
+    }
+  }
+};

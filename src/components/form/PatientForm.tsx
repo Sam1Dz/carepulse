@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 
 /* MATERIAL UI */
-import { MuiTelInput } from 'mui-tel-input';
 import { useSnackbar } from 'notistack';
 import { LoadingButton as Button } from '@mui/lab';
 import { InputAdornment, Stack, TextField, Typography } from '@mui/material';
@@ -14,6 +13,9 @@ import { InputAdornment, Stack, TextField, Typography } from '@mui/material';
 /* MATERIAL UI | ICONS */
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
+
+/* COMPONENTS */
+import PhoneField from '../ui/inputs/phone-field';
 
 /* LIBRARIES */
 import { RemoveTelFormatting, FormatDateTime } from '@/libs/utils';
@@ -132,25 +134,15 @@ export default function PatientForm() {
           ),
         }}
       />
-      <MuiTelInput
+      <PhoneField
         name="phone"
         label="Nomor Telepon *"
-        defaultCountry="ID"
         value={formik.values.phone}
-        onChange={(value, info) => {
-          const prefixCall = `+${info.countryCallingCode}`;
-
-          if (value.length === prefixCall.length) {
-            formik.setValues({
-              ...formik.values,
-              phone: value,
-            });
-          } else if (value.length > prefixCall.length) {
-            formik.setValues({
-              ...formik.values,
-              phone: value,
-            });
-          }
+        onChange={(value) => {
+          formik.setValues({
+            ...formik.values,
+            phone: value,
+          });
         }}
         onBlur={formik.handleBlur}
         error={formik.touched.phone && Boolean(formik.errors.phone)}
