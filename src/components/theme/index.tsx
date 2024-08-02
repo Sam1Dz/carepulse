@@ -23,6 +23,10 @@ import Color from './color-pallete';
 /* COMPONENTS */
 import UISnackbarAlert from '../ui/feedback/snackbar/alert';
 
+/* LOCALE */
+import { idID as coreIdId } from '@mui/material/locale';
+import { idIdDatePickers } from '@/locale/mui-x-locale-id';
+
 /* TYPES */
 import type { PaletteMode } from '@mui/material';
 import type { PropsWithChildren } from '@/types';
@@ -60,66 +64,91 @@ export const StyledLink = styled(NextLink)({});
 export default function ThemeProvider({ children }: PropsWithChildren) {
   const [mode] = React.useState<PaletteMode>('dark');
 
-  const appTheme = createTheme({
-    breakpoints: {
-      values: { xs: 0, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536 },
-    },
-    palette: {
-      mode: mode,
-      background: {
-        default:
-          mode === 'dark' ? Color.neutral.black[300] : Color.neutral.white[200],
+  const appTheme = createTheme(
+    {
+      breakpoints: {
+        values: { xs: 0, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536 },
       },
-      primary: {
-        main: mode === 'dark' ? Color.dark.green[500] : Color.light.green[500],
+      palette: {
+        mode: mode,
+        background: {
+          default:
+            mode === 'dark'
+              ? Color.neutral.black[300]
+              : Color.neutral.white[200],
+        },
+        primary: {
+          main:
+            mode === 'dark' ? Color.dark.green[500] : Color.light.green[500],
+        },
+        text: {
+          primary:
+            mode === 'dark'
+              ? Color.neutral.white[200]
+              : Color.neutral.black[300],
+          secondary:
+            mode === 'dark'
+              ? Color.neutral.black[700]
+              : Color.neutral.black[500],
+        },
+        success: {
+          main:
+            mode === 'dark' ? Color.dark.green[500] : Color.light.green[500],
+        },
+        info: {
+          main: mode === 'dark' ? Color.dark.blue[500] : Color.light.blue[500],
+        },
+        error: {
+          main: mode === 'dark' ? Color.dark.red[700] : Color.light.red[500],
+        },
       },
-      text: {
-        primary:
-          mode === 'dark' ? Color.neutral.white[200] : Color.neutral.black[300],
-        secondary:
-          mode === 'dark' ? Color.neutral.black[700] : Color.neutral.black[500],
+      typography: {
+        fontFamily: [FontSans.style.fontFamily, 'sans-serif'].join(','),
       },
-      success: {
-        main: mode === 'dark' ? Color.dark.green[500] : Color.light.green[500],
-      },
-      info: {
-        main: mode === 'dark' ? Color.dark.blue[500] : Color.light.blue[500],
-      },
-      error: {
-        main: mode === 'dark' ? Color.dark.red[700] : Color.light.red[500],
-      },
-    },
-    typography: {
-      fontFamily: [FontSans.style.fontFamily, 'sans-serif'].join(','),
-    },
-    components: {
-      MuiInputLabel: {
-        styleOverrides: {
-          root: {
-            color:
-              mode === 'dark'
-                ? Color.neutral.white[200]
-                : Color.neutral.black[300],
+      components: {
+        MuiInputLabel: {
+          styleOverrides: {
+            root: {
+              color:
+                mode === 'dark'
+                  ? Color.neutral.white[200]
+                  : Color.neutral.black[300],
+            },
+          },
+        },
+        MuiOutlinedInput: {
+          styleOverrides: {
+            notchedOutline: {
+              borderColor:
+                mode === 'dark'
+                  ? Color.neutral.white[200]
+                  : Color.neutral.black[300],
+            },
+          },
+        },
+        MuiSelect: {
+          styleOverrides: {
+            icon: {
+              color:
+                mode === 'dark'
+                  ? Color.neutral.white[200]
+                  : Color.neutral.black[300],
+            },
           },
         },
       },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            borderColor:
-              mode === 'dark'
-                ? Color.neutral.white[200]
-                : Color.neutral.black[300],
-          },
-        },
-      },
     },
-  });
+    coreIdId,
+  );
 
   return (
     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <MuiThemeProvider theme={appTheme}>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="id">
+        <LocalizationProvider
+          adapterLocale="id"
+          dateAdapter={AdapterDayjs}
+          localeText={idIdDatePickers}
+        >
           <SnackbarProvider
             Components={{
               alert: UISnackbarAlert,

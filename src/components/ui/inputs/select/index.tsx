@@ -16,16 +16,7 @@ export default function SelectField(props: SelectFieldProps) {
   return (
     <FormControl fullWidth={fullWidth}>
       <InputLabel id={`select-label-${label}`}>{label}</InputLabel>
-      <Select
-        labelId={`select-label-${label}`}
-        sx={{
-          ...props.sx,
-          '& .MuiSvgIcon-root': {
-            color: 'text.primary',
-          },
-        }}
-        {...props}
-      >
+      <Select labelId={`select-label-${label}`} {...props}>
         {children}
       </Select>
     </FormControl>
