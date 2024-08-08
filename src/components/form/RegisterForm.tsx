@@ -7,12 +7,15 @@ import {
   Stack,
   Avatar,
   Button,
+  Checkbox,
   MenuItem,
   TextField,
+  FormGroup,
   Typography,
   ListItemIcon,
   ListItemText,
   InputAdornment,
+  FormControlLabel,
   Unstable_Grid2 as Grid,
 } from '@mui/material';
 
@@ -23,6 +26,7 @@ import PersonIcon from '@mui/icons-material/Person';
 /* COMPONENTS */
 import PhoneField from '../ui/inputs/phone-field';
 import SelectField from '../ui/inputs/select';
+import UploadDndField from '../ui/inputs/upload/upload-dnd-field';
 import DatePickerField from '../ui/inputs/date/date-picker-field';
 import { StyledImage } from '../theme';
 
@@ -295,7 +299,38 @@ export default function RegisterForm() {
             label="Nomor Identitas *"
             placeholder="ABC123456789"
           />
+
+          <UploadDndField
+            files={[]}
+            onChange={(files) => {
+              console.log(files);
+            }}
+          />
         </Stack>
+      </Stack>
+
+      <Stack component="section" direction="column" gap={1}>
+        <Typography component="h2" variant="h5" fontWeight="bold">
+          Persetujuan dan Privasi
+        </Typography>
+
+        <FormGroup>
+          <FormControlLabel
+            required
+            control={<Checkbox />}
+            label="Saya setuju untuk menerima perawatan untuk kondisi kesehatan saya."
+          />
+          <FormControlLabel
+            required
+            control={<Checkbox />}
+            label="Saya menyetujui penggunaan dan pengungkapan informasi kesehatan saya untuk tujuan pengobatan."
+          />
+          <FormControlLabel
+            required
+            control={<Checkbox />}
+            label="Saya mengakui bahwa saya telah meninjau dan menyetujui kebijakan privasi."
+          />
+        </FormGroup>
       </Stack>
 
       <Button type="submit" variant="contained">

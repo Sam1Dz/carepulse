@@ -3,11 +3,10 @@
 // http://localhost:3000/patients/669525fa003c831999ff/register
 
 import React from 'react';
-import NextLink from 'next/link';
 
 /* MATERIAL UI */
 import { useTheme } from '@mui/material/styles';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 /* COMPONENTS */
 import Color from '@/components/theme/color-pallete';
@@ -76,7 +75,7 @@ export default function Register({ params: { userId } }: SearchParamProps) {
           <Box
             sx={{
               mt: 3,
-              pb: 5,
+              pb: 3,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -95,9 +94,6 @@ export default function Register({ params: { userId } }: SearchParamProps) {
             >
               &copy; 2024 CarePulse
             </Typography>
-            <NextLink href="/?admin=true">
-              <Button>Admin</Button>
-            </NextLink>
           </Box>
         </Box>
       </Box>

@@ -1,4 +1,5 @@
 export const RemoveTelFormatting = (value: string) => value.replace(/\s+/g, '');
+export const ConvertFileToUrl = (file: File) => URL.createObjectURL(file);
 
 // FORMAT DATE TIME
 export const FormatDateTime = (dateString: Date | string) => {
