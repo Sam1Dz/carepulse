@@ -3,7 +3,7 @@ import type { StatusCodes } from 'http-status-codes';
 import type { Appointment } from './appwrite.type';
 
 // GLOBAL
-export type Gender = 'Male' | 'Female' | 'Other';
+export type Gender = 'male' | 'female' | 'hidden';
 export type Status = 'pending' | 'scheduled' | 'cancelled';
 
 export interface CreateUserParams {
@@ -17,24 +17,38 @@ export interface User extends CreateUserParams {
 
 export interface RegisterUserParams extends CreateUserParams {
   userId: string;
-  birthDate: Date;
+  birthDate: string;
   gender: Gender;
   address: string;
   occupation: string;
   emergencyContactName: string;
   emergencyContactNumber: string;
   primaryPhysician: string;
-  insuranceProvider: string;
-  insurancePolicyNumber: string;
+  insuranceProvider: string | undefined;
+  insurancePolicyNumber: string | undefined;
   allergies: string | undefined;
   currentMedication: string | undefined;
   familyMedicalHistory: string | undefined;
   pastMedicalHistory: string | undefined;
-  identificationType: string | undefined;
-  identificationNumber: string | undefined;
-  identificationDocument: FormData | undefined;
-  privacyConsent: boolean;
+  identificationType: string;
+  identificationNumber: string;
+  identificationDocument: FormData;
 }
+
+export type RegisterUserFormParams = Omit<
+  RegisterUserParams,
+  | 'userId'
+  | 'name'
+  | 'email'
+  | 'phone'
+  | 'birthDate'
+  | 'gender'
+  | 'identificationDocument'
+> & {
+  gender: Gender | '';
+  birthDate: Date | null;
+  identificationDocument: File | null;
+};
 
 export interface CreateAppointmentParams {
   userId: string;

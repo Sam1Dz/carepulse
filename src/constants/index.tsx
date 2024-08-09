@@ -5,19 +5,19 @@ import NotInterestedIcon from '@mui/icons-material/NotInterested';
 
 export const GenderOptions = [
   {
-    value: 'Male',
+    value: 'male',
     tlId: 'Laki - Laki',
     tlEn: 'Male',
     icon: <MaleIcon />,
   },
   {
-    value: 'Female',
+    value: 'female',
     tlId: 'Perempuan',
     tlEn: 'Female',
     icon: <FemaleIcon />,
   },
   {
-    value: 'Hidden',
+    value: 'hidden',
     tlId: 'Tidak Menjawab',
     tlEn: 'Hidden',
     icon: <NotInterestedIcon />,

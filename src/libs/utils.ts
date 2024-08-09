@@ -1,3 +1,5 @@
+import dayjs, { Dayjs } from 'dayjs';
+
 export const RemoveTelFormatting = (value: string) => value.replace(/\s+/g, '');
 export const ConvertFileToUrl = (file: File) => URL.createObjectURL(file);
 
@@ -73,4 +75,22 @@ export const FormatDateTime = (dateString: Date | string) => {
     timeOnly: formattedTime,
     translatedTime: translatedTime(),
   };
+};
+
+// FORMAT DATE TO DAYJS
+export const FormatDateToDayJs = (date: Date | Dayjs | string | null) => {
+  if (date) {
+    return dayjs(date);
+  } else {
+    return null;
+  }
+};
+
+// COVERT DATE TO ISO LOCAL TIME
+export const ConvertToISOLocalTime = (date: Date | string) => {
+  const DateValue = new Date(date);
+
+  return new Date(
+    DateValue.getTime() - DateValue.getTimezoneOffset() * 60000,
+  ).toISOString();
 };

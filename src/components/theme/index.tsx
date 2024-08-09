@@ -126,16 +126,6 @@ export default function ThemeProvider({ children }: PropsWithChildren) {
             },
           },
         },
-        MuiSelect: {
-          styleOverrides: {
-            icon: {
-              color:
-                mode === 'dark'
-                  ? Color.neutral.white[200]
-                  : Color.neutral.black[300],
-            },
-          },
-        },
       },
     },
     coreIdId,

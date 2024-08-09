@@ -18,9 +18,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import PhoneField from '../ui/inputs/phone-field';
 
 /* LIBRARIES */
-import { RemoveTelFormatting, FormatDateTime } from '@/libs/utils';
-import { UserFormValidation } from '@/libs/validation';
 import { CreateUser } from '@/libs/actions/patient.action';
+import { UserFormValidation } from '@/libs/validation';
+import { RemoveTelFormatting, FormatDateTime } from '@/libs/utils';
 
 /* TYPES */
 import type { CreateUserParams, ResponseType } from '@/types';
@@ -105,6 +105,7 @@ export default function PatientForm() {
         label="Nama *"
         placeholder="John Doe"
         value={formik.values.name}
+        disabled={formik.isSubmitting}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={formik.touched.name && Boolean(formik.errors.name)}
@@ -122,6 +123,7 @@ export default function PatientForm() {
         label="Email *"
         placeholder="johndoe@email.com"
         value={formik.values.email}
+        disabled={formik.isSubmitting}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={formik.touched.email && Boolean(formik.errors.email)}
@@ -138,6 +140,7 @@ export default function PatientForm() {
         name="phone"
         label="Nomor Telepon *"
         value={formik.values.phone}
+        disabled={formik.isSubmitting}
         onChange={(value) => {
           formik.setValues({
             ...formik.values,

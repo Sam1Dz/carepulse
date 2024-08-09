@@ -2,28 +2,26 @@
 import { DatePicker as MuiXDatePicker } from '@mui/x-date-pickers';
 
 /* TYPES */
+import type { TextFieldProps } from '@mui/material';
 import type { DatePickerProps, PickerValidDate } from '@mui/x-date-pickers';
 
-type DatePickerFieldProps = DatePickerProps<PickerValidDate> & {
-  fullWidth?: boolean;
-};
+type DatePickerFieldProps = DatePickerProps<PickerValidDate>;
 
 export default function DatePickerField(props: DatePickerFieldProps) {
-  const isFullWidth = props.fullWidth
-    ? {
-        width: '100%',
-      }
-    : {};
+  const textFieldProps = props.slotProps?.textField;
+  const isFieldError = textFieldProps
+    ? (textFieldProps as TextFieldProps).error
+    : false;
 
   return (
     <MuiXDatePicker
-      sx={{
-        width: isFullWidth,
-        '& .MuiSvgIcon-root': {
-          color: 'text.primary',
-        },
-      }}
       {...props}
+      sx={{
+        '& .MuiSvgIcon-root': {
+          color: isFieldError ? 'error.main' : 'text.primary',
+        },
+        ...props.sx,
+      }}
     />
   );
 }
